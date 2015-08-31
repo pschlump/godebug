@@ -4,8 +4,9 @@ package debug
 //
 // Simple functions to help with debuging GO code.
 //
-// (C) Philip Schlump, 2013-2014.
-// Version: 1.0.0
+// Copyright (C) Philip Schlump, 2013-2014.
+// Version: 1.0.1
+// See LICENSE file for details. -- Same as Go source code.
 // BuildNo: 060
 //
 // I usually use these like this:
