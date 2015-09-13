@@ -25,5 +25,8 @@ Example:
 
 ```
 
+LF() takes an optional parameter, 1 indicates the current
+function, 2 is the parent, 3 the grandparent.
+
 I will add complete documentation tomorrow.
 
