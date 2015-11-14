@@ -1,4 +1,4 @@
-package debug
+package godebug
 
 // ----------------------------------------------------------------------------------------------------------
 //
@@ -184,4 +184,18 @@ func InArrayInt(s int, arr []int) int {
 		}
 	}
 	return -1
+}
+
+var stdout_on = false
+
+func TrIAmAt(s ...string) {
+	if stdout_on {
+		pc, file, line, ok := runtime.Caller(1)
+		if ok {
+			xfunc := runtime.FuncForPC(pc).Name()
+			fmt.Printf("Func:%s File:%s LineNo:%d, %s\n", xfunc, file, line, strings.Join(s, " "))
+		} else {
+			fmt.Printf("Func:Unk File:Unk LineNo:Unk, %s\n", strings.Join(s, " "))
+		}
+	}
 }
