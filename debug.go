@@ -37,10 +37,12 @@ package godebug
 // ----------------------------------------------------------------------------------------------------------
 
 import (
-	"encoding/json"
 	"fmt"
+	"os"
 	"runtime"
 	"strings"
+
+	"github.com/pschlump/json" //	"encoding/json"
 )
 
 // Return the current line number as a string.  Default parameter is 1, must be an integer
@@ -198,4 +200,25 @@ func TrIAmAt(s ...string) {
 			fmt.Printf("Func:Unk File:Unk LineNo:Unk, %s\n", strings.Join(s, " "))
 		}
 	}
+}
+
+func Printf(flag bool, format string, a ...interface{}) (n int, err error) {
+	if flag {
+		return fmt.Fprintf(os.Stdout, format, a...)
+	}
+	return
+}
+
+func LF2(d ...int) (line int, file string) {
+	depth := 1
+	if len(d) > 0 {
+		depth = d[0]
+	}
+	var ok bool
+	_, file, line, ok = runtime.Caller(depth)
+	if !ok {
+		line = 0
+		file = "Unk"
+	}
+	return
 }
