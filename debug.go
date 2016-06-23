@@ -45,7 +45,7 @@ import (
 	"github.com/pschlump/json" //	"encoding/json"
 )
 
-// Return the current line number as a string.  Default parameter is 1, must be an integer
+// LINE Return the current line number as a string.  Default parameter is 1, must be an integer
 // That reflectgs the depth in the call stack.  A value of 0 would be the LINE() function
 // itself.  If you suply more than one parameter, 2..n are ignored.
 func LINE(d ...int) string {
@@ -56,9 +56,21 @@ func LINE(d ...int) string {
 	_, _, line, ok := runtime.Caller(depth)
 	if ok {
 		return fmt.Sprintf("%d", line)
-	} else {
-		return "LineNo:Unk"
 	}
+	return "LineNo:Unk"
+}
+
+// LINEn Returns line number, 0 if error
+func LINEnf(d ...int) (int, string) {
+	depth := 1
+	if len(d) > 0 {
+		depth = d[0]
+	}
+	_, file, line, ok := runtime.Caller(depth)
+	if ok {
+		return line, file
+	}
+	return -1, ""
 }
 
 // Return the current file name.
