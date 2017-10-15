@@ -2,16 +2,16 @@ package godebug
 
 // ----------------------------------------------------------------------------------------------------------
 //
-// Simple functions to help with debuging GO code.
+// Simple functions to help with debugging Go (golang) code.
 //
-// Copyright (C) Philip Schlump, 2013-2014.
-// Version: 1.0.1
+// Copyright (C) Philip Schlump, 2013-2017.
+// Version: 1.0.2
 // See LICENSE file for details. -- Same as Go source code.
-// BuildNo: 060
+// BuildNo: 063
 //
 // I usually use these like this:
 //
-//     func someting ( j int ) {
+//     func something ( j int ) {
 //			...
 //			fmt.Pritnf ( "Ya someting useful %s\n", debug.LF(1) )
 //
@@ -24,15 +24,15 @@ package godebug
 //	  IAmAt			Print out current line/file
 //	  SVarI			Convert most things to an indented JSON string and return it.
 //
-// To Include put these fiels in ./debug and in your code
+// To import put this in your code:
 //
 //		import (
-//			"./degug"
+//			"github.com/pschlump/godegug"
 //		)
 //
 // Then
 //
-//		fmt.Printf ( ".... %s ...\n", debug.LF() )
+//		fmt.Printf ( ".... %s ...\n", godebug.LF() )
 //
 // ----------------------------------------------------------------------------------------------------------
 
@@ -42,12 +42,12 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/pschlump/json" //	"encoding/json"
+	"github.com/pschlump/json" // modified from "encoding/json" to handle undefined types
 )
 
 // LINE Return the current line number as a string.  Default parameter is 1, must be an integer
-// That reflectgs the depth in the call stack.  A value of 0 would be the LINE() function
-// itself.  If you suply more than one parameter, 2..n are ignored.
+// That reflects the depth in the call stack.  A value of 0 would be the LINE() function
+// itself.  If you supply more than one parameter, 2..n are ignored.
 func LINE(d ...int) string {
 	depth := 1
 	if len(d) > 0 {
@@ -73,7 +73,7 @@ func LINEnf(d ...int) (int, string) {
 	return -1, ""
 }
 
-// Return the current file name.
+// FILE Returns the current file name.
 func FILE(d ...int) string {
 	depth := 1
 	if len(d) > 0 {
@@ -87,7 +87,7 @@ func FILE(d ...int) string {
 	}
 }
 
-// Return the File name and Line no as a string.
+// LF Returns the File name and Line no as a string.
 func LF(d ...int) string {
 	depth := 1
 	if len(d) > 0 {
@@ -101,7 +101,7 @@ func LF(d ...int) string {
 	}
 }
 
-// Return the File name and Line no as a string. - for JSON as string
+// LFj returns the File name and Line no as a string. - for JSON as string
 func LFj(d ...int) string {
 	depth := 1
 	if len(d) > 0 {
@@ -115,7 +115,7 @@ func LFj(d ...int) string {
 	}
 }
 
-// Return the current funciton name as a string.
+// FUNCNAME returns the current function name as a string.
 func FUNCNAME(d ...int) string {
 	depth := 1
 	if len(d) > 0 {
@@ -130,7 +130,7 @@ func FUNCNAME(d ...int) string {
 	}
 }
 
-// Print out the current Function,File,Line No and an optional set of strings.
+// IAmAt print out the current Function,File,Line No and an optional set of strings.
 func IAmAt(s ...string) {
 	pc, file, line, ok := runtime.Caller(1)
 	if ok {
@@ -141,7 +141,7 @@ func IAmAt(s ...string) {
 	}
 }
 
-// Print out the current Function,File,Line No and an optional set of strings - do this for 2 levels deep.
+// IAmAt2 prints out the current Function,File,Line No and an optional set of strings - do this for 2 levels deep.
 func IAmAt2(s ...string) {
 	pc, file, line, ok := runtime.Caller(1)
 	pc2, file2, line2, ok2 := runtime.Caller(2)
@@ -159,7 +159,7 @@ func IAmAt2(s ...string) {
 	}
 }
 
-// -------------------------------------------------------------------------------------------------
+// SVar return the JSON encoded version of the data.
 func SVar(v interface{}) string {
 	s, err := json.Marshal(v)
 	// s, err := json.MarshalIndent ( v, "", "\t" )
@@ -170,7 +170,7 @@ func SVar(v interface{}) string {
 	}
 }
 
-// -------------------------------------------------------------------------------------------------
+// SVarI return the JSON encoded version of the data with tab indentation.
 func SVarI(v interface{}) string {
 	// s, err := json.Marshal ( v )
 	s, err := json.MarshalIndent(v, "", "\t")
@@ -181,7 +181,7 @@ func SVarI(v interface{}) string {
 	}
 }
 
-// -------------------------------------------------------------------------------------------------
+// Return 0..n if 's' is in the array arr, else -1.
 func InArrayString(s string, arr []string) int {
 	for i, v := range arr {
 		if v == s {
@@ -191,6 +191,7 @@ func InArrayString(s string, arr []string) int {
 	return -1
 }
 
+// Return 0..n if 'n' is in the array arr, else -1.
 func InArrayInt(s int, arr []int) int {
 	for i, v := range arr {
 		if v == s {
@@ -202,6 +203,7 @@ func InArrayInt(s int, arr []int) int {
 
 var stdout_on = false
 
+// Hm...
 func TrIAmAt(s ...string) {
 	if stdout_on {
 		pc, file, line, ok := runtime.Caller(1)
@@ -214,6 +216,7 @@ func TrIAmAt(s ...string) {
 	}
 }
 
+// Printf with a true false flag.
 func Printf(flag bool, format string, a ...interface{}) (n int, err error) {
 	if flag {
 		return fmt.Fprintf(os.Stdout, format, a...)
@@ -221,6 +224,7 @@ func Printf(flag bool, format string, a ...interface{}) (n int, err error) {
 	return
 }
 
+// LF2 returns the line/file for the parent.
 func LF2(d ...int) (line int, file string) {
 	depth := 1
 	if len(d) > 0 {
@@ -234,3 +238,5 @@ func LF2(d ...int) (line int, file string) {
 	}
 	return
 }
+
+/* vim: set noai ts=4 sw=4: */
