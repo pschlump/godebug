@@ -30,3 +30,22 @@ func TestFastChop(t *testing.T) {
 		t.Errorf("Error 02, Expected [1,3,2], got %s\n", s)
 	}
 }
+
+func TestParseBool(t *testing.T) {
+	tf := ParseBool("Yes")
+	if !tf {
+		t.Errorf("Error ParseBool failed\n")
+	}
+	tf = ParseBool("")
+	if tf {
+		t.Errorf("Error ParseBool failed\n")
+	}
+}
+
+func TestEnvCheck(t *testing.T) {
+	// func ChkEnv(envVar string) bool {
+	tf := ChkEnv("some-undefined-env-var--22323232323232323232323232")
+	if tf {
+		t.Errorf("Error ChkEnv failed\n")
+	}
+}
