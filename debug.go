@@ -42,7 +42,7 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/pschlump/json" // modified from "encoding/json" to handle undefined types
+	"github.com/pschlump/json" // modified from "encoding/json" to handle undefined types by ignoring them.
 )
 
 // LINE Return the current line number as a string.  Default parameter is 1, must be an integer
@@ -60,7 +60,7 @@ func LINE(d ...int) string {
 	return "LineNo:Unk"
 }
 
-// LINEn Returns line number, 0 if error
+// LINEnf Returns line number, 0 if error
 func LINEnf(d ...int) (int, string) {
 	depth := 1
 	if len(d) > 0 {
