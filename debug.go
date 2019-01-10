@@ -217,7 +217,7 @@ func TrIAmAt(s ...string) {
 }
 
 // Printf with a true false flag.
-func Printf(flag bool, format string, a ...interface{}) (n int, err error) {
+func Db2Printf(flag bool, format string, a ...interface{}) (n int, err error) {
 	if flag {
 		return fmt.Fprintf(os.Stdout, format, a...)
 	}
