@@ -56,13 +56,21 @@ func ProcessFormat(format string) string {
 				}
 			}
 			i = j
-			// fmt.Printf("--->%s<---\n", color)
-			ct, ok := ColorTab[color]
-			if !ok {
-				ct = ColorTab["Red"]
+			var ct string
+			var ok bool
+			switch color {
+			case "LF":
+				ct = LF(3)
+			default:
+				// fmt.Printf("--->%s<---\n", color)
+				ct, ok = ColorTab[color]
+				if !ok {
+					ct = ColorTab["Red"]
+				}
+				colorFound = true
 			}
 			buffer.WriteString(ct)
-			colorFound = true
+
 			if color == "!" || color == "Reset" {
 				colorFound = false
 			}
