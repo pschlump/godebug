@@ -9,6 +9,12 @@ import (
 	"github.com/pschlump/MiscLib"
 )
 
+/*
+TODO
+	1. Add in JSON format
+	2. Add in %(LINE) %(FUNC) etc.
+
+
 func x() {
 	var buffer bytes.Buffer
 
@@ -18,6 +24,7 @@ func x() {
 
 	fmt.Println(buffer.String())
 }
+*/
 
 var ColorTab map[string]string
 
@@ -114,4 +121,8 @@ func DbPfb(db bool, format string, a ...interface{}) (n int, err error) {
 		return fmt.Printf(ff, a...)
 	}
 	return 0, nil
+}
+
+func DbPfe(envVar string, format string, a ...interface{}) (n int, err error) {
+	return DbPfb(ChkEnv(envVar), format, a...)
 }

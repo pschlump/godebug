@@ -1,21 +1,48 @@
 package godebug
 
-import "os"
+import (
+	"os"
+	"sync"
+)
 
 var envCache map[string]string
+var envCache0 map[string]bool
+var envlock sync.RWMutex
 
 func init() {
 	envCache = make(map[string]string)
+	envCache0 = make(map[string]bool)
+}
+
+func SetFlag(name, sValue string) {
+	envlock.Lock()
+	envCache[name] = sValue
+	envCache0[name] = ParseBool(sValue)
+	envlock.Unlock()
 }
 
 func ChkEnv(envVar string) bool {
+	envlock.RLock()
+	vv, ok := envCache0[envVar]
+	if ok {
+		envlock.RUnlock()
+		return vv
+	}
 	v, ok := envCache[envVar]
 	if ok {
+		envlock.RUnlock()
 		return ParseBool(v)
 	}
+	envlock.RUnlock()
+
 	v = os.Getenv(envVar)
+	envlock.Lock()
 	envCache[envVar] = v
+	envlock.Unlock()
 	x := ChkEnv(envVar)
+	envlock.Lock()
+	envCache0[envVar] = x
+	envlock.Unlock()
 	return x
 }
 

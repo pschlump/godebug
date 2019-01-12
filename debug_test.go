@@ -43,9 +43,14 @@ func TestParseBool(t *testing.T) {
 }
 
 func TestEnvCheck(t *testing.T) {
-	// func ChkEnv(envVar string) bool {
 	tf := ChkEnv("some-undefined-env-var--22323232323232323232323232")
 	if tf {
-		t.Errorf("Error ChkEnv failed\n")
+		t.Errorf("Error ChkEnv 1 failed\n")
+	}
+	for i := 0; i < 50000; i++ {
+		tf = ChkEnv("some-undefined-env-var--22323232323232323232323232")
+		if tf {
+			t.Errorf("Error ChkEnv 1 failed\n")
+		}
 	}
 }
