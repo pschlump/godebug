@@ -13,6 +13,7 @@ import (
 TODO
 	1. Add in JSON format
 	2. Add in %(LINE) %(FUNC) etc.
+	3. Add in %(TB:4) 	Trace back 4 levels
 
 
 func x() {
