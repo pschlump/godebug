@@ -38,11 +38,10 @@ package godebug
 
 import (
 	"fmt"
+	"github.com/pschlump/json" // modified from "encoding/json" to handle undefined types by ignoring them.
 	"os"
 	"runtime"
 	"strings"
-
-	"github.com/pschlump/json" // modified from "encoding/json" to handle undefined types by ignoring them.
 )
 
 // LINE Return the current line number as a string.  Default parameter is 1, must be an integer
@@ -93,11 +92,35 @@ func LF(d ...int) string {
 	if len(d) > 0 {
 		depth = d[0]
 	}
-	_, file, line, ok := runtime.Caller(depth)
-	if ok {
-		return fmt.Sprintf("File: %s LineNo:%d", file, line)
+	loop := false
+	nf := 0
+	if depth <= -1 { // if <= -1, then number of files to walk back.
+		nf = (-depth) + 1
+		depth = 1
+		loop = true
+	}
+	if loop {
+		_, file0, line, ok := runtime.Caller(depth)
+		ss := ""
+		for ii := 0; ii < nf; ii++ {
+			file := file0
+			ln := make([]int, 0, depth)
+			for ok && file == file0 {
+				ln = append(ln, line)
+				depth++
+				_, file, line, ok = runtime.Caller(depth)
+			}
+			ss = ss + fmt.Sprintf("File: %s LineNo:%d ", file0, ln)
+			file0 = file
+		}
+		return ss
 	} else {
-		return fmt.Sprintf("File: Unk LineNo:Unk")
+		_, file, line, ok := runtime.Caller(depth)
+		if ok {
+			return fmt.Sprintf("File: %s LineNo:%d", file, line)
+		} else {
+			return fmt.Sprintf("File: Unk LineNo:Unk")
+		}
 	}
 }
 
