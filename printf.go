@@ -115,6 +115,13 @@ func DbPf(db bool, format string, a ...interface{}) (n int, err error) {
 	return 0, nil
 }
 
+func DbFpf(db bool, w io.Writer, format string, a ...interface{}) (n int, err error) {
+	if db {
+		return fmt.Fprintf(w, ProcessFormat(format), a...)
+	}
+	return 0, nil
+}
+
 func DbPfb(db bool, format string, a ...interface{}) (n int, err error) {
 	if db {
 		ff := ProcessFormat(format)
