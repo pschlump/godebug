@@ -1,10 +1,10 @@
 module github.com/pschlump/godebug
 
-go 1.17
+go 1.22.0
 
 require (
 	github.com/pschlump/MiscLib v1.0.3
-	github.com/pschlump/json v0.0.0-20180316172947-0d2e6a308e08
+	github.com/pschlump/json v1.12.0
 )
 
 require (
