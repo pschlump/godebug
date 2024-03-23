@@ -6,7 +6,7 @@ github.com/pschlump/go-colorable v0.0.22 h1:TDWqizpzKbKIYVazTqzjqIeNhRkqcjiDWEg2
 github.com/pschlump/go-colorable v0.0.22/go.mod h1:apIdzWy0G288QcNSRRBUzEIQX5YO7VwqlOtX2b/AMCg=
 github.com/pschlump/go-isatty v0.0.22 h1:RLvML5xPE8XQXvqs5B8mcm1ZQ5TaqxlTTCIICkhjQzE=
 github.com/pschlump/go-isatty v0.0.22/go.mod h1:SwewGrDOVrhqmT2eq4sSngeOYBPAGIwf387q/k3n6fY=
-github.com/pschlump/json v1.12.0 h1:PjkeVEgEUg+vkHC8CfeXIG4fChev3a7gjl9wYrTnPIE=
-github.com/pschlump/json v1.12.0/go.mod h1:MyeKNxcsYS/AaCqIp6DgPdaE/4NVH49OJVCnQsRoevI=
+github.com/pschlump/json v1.12.1 h1:0E7lGxBvv7N+iY4p3/futCjRYAD62qpRL6+DdnZcSXY=
+github.com/pschlump/json v1.12.1/go.mod h1:O7hZ/dn2YrWqDT4CG8CJKJCSIv6Z+Lv1wINCA7BHeJA=
 golang.org/x/sys v0.6.0 h1:MVltZSvRTcU2ljQOhs94SXPftV6DCNnZViHeQps87pQ=
 golang.org/x/sys v0.6.0/go.mod h1:oPkhp1MJrh7nUepCBck5+mAzfO9JrbApNNgaTdGDITg=

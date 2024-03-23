@@ -4,7 +4,7 @@ go 1.22.0
 
 require (
 	github.com/pschlump/MiscLib v1.0.7
-	github.com/pschlump/json v1.12.0
+	github.com/pschlump/json v1.12.1
 )
 
 require (
